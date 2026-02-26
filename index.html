@@ -439,14 +439,14 @@ function buildPipeline(byStatus) {
   // Pipeline order: Pending → Working → Addressed → Done
   // Side branches: Stuck, Retest Failed
   const stages = [
-    { key: 'Pending Prioritisation', label: 'Pending', color: '#8b5cf6' },
-    { key: 'Working on it', label: 'Working', color: '#f59e0b' },
-    { key: 'Addressed (Ready for Re-Test)', label: 'Addressed', color: '#3b82f6' },
-    { key: 'Done (REQ APPROVED)', label: 'Done', color: '#10b981' },
+    { key: 'Pending Prioritisation', label: 'Pending Prioritisation', color: '#8b5cf6' },
+    { key: 'Working on it', label: 'Working on it', color: '#f59e0b' },
+    { key: 'Addressed (Ready for Re-Test)', label: 'Ready for Re-Test', color: '#3b82f6' },
+    { key: 'Done (REQ APPROVED)', label: 'Done (Approved)', color: '#10b981' },
   ];
   const branches = [
     { key: 'Stuck', label: 'Stuck', color: '#ef4444' },
-    { key: 'Retest unsuccessful', label: 'Retest Failed', color: '#dc2626' },
+    { key: 'Retest unsuccessful', label: 'Retest Unsuccessful', color: '#dc2626' },
   ];
   const total = Object.values(byStatus).reduce((s, v) => s + v, 0);
 
