@@ -518,6 +518,16 @@
     "TB Substudy",
     "acamprosate"
   ],
+  "trend": [
+    {"week": "W02", "date": "2026-01-12", "open": 25, "resolved": 0,  "total": 25},
+    {"week": "W03", "date": "2026-01-16", "open": 34, "resolved": 0,  "total": 34},
+    {"week": "W04", "date": "2026-01-23", "open": 50, "resolved": 0,  "total": 50},
+    {"week": "W05", "date": "2026-01-30", "open": 58, "resolved": 0,  "total": 58},
+    {"week": "W06", "date": "2026-02-05", "open": 48, "resolved": 16, "total": 64},
+    {"week": "W07", "date": "2026-02-12", "open": 41, "resolved": 25, "total": 66},
+    {"week": "W08", "date": "2026-02-20", "open": 44, "resolved": 25, "total": 69},
+    {"week": "W09", "date": "2026-02-26", "open": 45, "resolved": 28, "total": 73}
+  ],
   "date_range": {
     "earliest": "2025-11-25",
     "latest": "2026-02-24"

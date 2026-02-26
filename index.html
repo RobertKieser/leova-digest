@@ -138,6 +138,72 @@
   .badge-pending { background: var(--purple-bg); color: #5b21b6; }
   .badge-retest { background: #fef2f2; color: #991b1b; }
 
+  /* ---- Trend chart ---- */
+  .trend-wrap { position: relative; width: 100%; padding-top: 8px; }
+  .trend-svg { width: 100%; height: auto; display: block; }
+  .trend-svg text { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; }
+  .trend-legend { display: flex; gap: 28px; margin-top: 20px; }
+  .trend-legend-item { display: flex; align-items: center; gap: 8px; font-size: 13px; font-weight: 500; color: var(--text-secondary); }
+  .trend-legend-swatch { width: 24px; height: 3px; border-radius: 2px; }
+  .trend-tooltip {
+    position: absolute; pointer-events: none; opacity: 0;
+    background: var(--text); color: #fff; padding: 8px 14px; border-radius: 4px;
+    font-size: 12px; font-weight: 600; line-height: 1.5; letter-spacing: 0.2px;
+    white-space: nowrap; transition: opacity 0.15s;
+    transform: translate(-50%, -100%); margin-top: -12px;
+  }
+  .trend-tooltip.visible { opacity: 1; }
+
+  /* ---- Pipeline ---- */
+  .pipeline-wrap { padding: 10px 0 0; }
+  .pipeline-flow {
+    display: flex; align-items: stretch; gap: 0;
+    border: 1px solid var(--divider); overflow: hidden;
+  }
+  .pipeline-stage {
+    flex: 1; padding: 28px 20px; text-align: center;
+    position: relative; border-right: 1px solid var(--divider);
+    transition: background 0.15s;
+  }
+  .pipeline-stage:last-child { border-right: none; }
+  .pipeline-stage:hover { background: var(--bg-muted); }
+  .pipeline-value { font-size: 36px; font-weight: 800; letter-spacing: -1.5px; line-height: 1; }
+  .pipeline-label {
+    font-size: 11px; font-weight: 700; letter-spacing: 1.5px; text-transform: uppercase;
+    color: var(--text-muted); margin-top: 8px;
+  }
+  .pipeline-pct { font-size: 12px; color: var(--text-muted); margin-top: 4px; }
+  .pipeline-bar {
+    height: 4px; margin-top: 16px; border-radius: 2px; width: 100%;
+  }
+  .pipeline-arrow {
+    position: absolute; right: -8px; top: 50%; transform: translateY(-50%);
+    z-index: 2; color: var(--divider); font-size: 14px;
+  }
+  .pipeline-summary {
+    display: grid; grid-template-columns: 1fr 1fr; gap: 0;
+    border: 1px solid var(--divider); border-top: none;
+  }
+  .pipeline-summary-cell {
+    padding: 20px 24px; border-right: 1px solid var(--divider);
+    display: flex; align-items: center; gap: 16px;
+  }
+  .pipeline-summary-cell:last-child { border-right: none; }
+  .pipeline-summary-value { font-size: 28px; font-weight: 800; letter-spacing: -1px; }
+  .pipeline-summary-text { font-size: 13px; color: var(--text-secondary); line-height: 1.4; }
+  .pipeline-summary-label {
+    font-size: 11px; font-weight: 700; letter-spacing: 1px; text-transform: uppercase;
+    color: var(--text-muted);
+  }
+  @media (max-width: 700px) {
+    .pipeline-flow { flex-wrap: wrap; }
+    .pipeline-stage { flex: 1 0 45%; border-bottom: 1px solid var(--divider); }
+    .pipeline-arrow { display: none; }
+    .pipeline-summary { grid-template-columns: 1fr; }
+    .pipeline-summary-cell { border-right: none; border-bottom: 1px solid var(--divider); }
+    .pipeline-summary-cell:last-child { border-bottom: none; }
+  }
+
   /* ---- Theme accordion ---- */
   .theme-list { }
   .theme-item { border-bottom: 1px solid var(--divider); }
@@ -302,6 +368,124 @@ function fmtDay(d) {
   return dt.toLocaleDateString('en-GB', { weekday: 'long', day: 'numeric', month: 'long', year: 'numeric' });
 }
 
+/* ---- Trend chart builder ---- */
+function buildTrendSVG(trend) {
+  const W = 960, H = 320;
+  const pad = { top: 20, right: 30, bottom: 40, left: 44 };
+  const cw = W - pad.left - pad.right;
+  const ch = H - pad.top - pad.bottom;
+
+  const maxVal = Math.max(...trend.map(d => d.total)) * 1.12;
+  const xStep = cw / (trend.length - 1);
+  const y = v => pad.top + ch - (v / maxVal) * ch;
+  const x = i => pad.left + i * xStep;
+
+  // Grid lines
+  const gridCount = 4;
+  let grid = '';
+  for (let i = 0; i <= gridCount; i++) {
+    const val = Math.round((maxVal / gridCount) * i);
+    const gy = y(val);
+    grid += `<line x1="${pad.left}" y1="${gy}" x2="${W - pad.right}" y2="${gy}" stroke="#e8e8e8" stroke-width="1"/>`;
+    grid += `<text x="${pad.left - 10}" y="${gy + 4}" text-anchor="end" fill="#999" font-size="11" font-weight="500">${val}</text>`;
+  }
+
+  // X labels
+  let xLabels = trend.map((d, i) =>
+    `<text x="${x(i)}" y="${H - 8}" text-anchor="middle" fill="#999" font-size="11" font-weight="600">${d.week}</text>`
+  ).join('');
+
+  // Area fills
+  const openPts = trend.map((d, i) => `${x(i)},${y(d.open)}`).join(' ');
+  const resPts = trend.map((d, i) => `${x(i)},${y(d.resolved)}`).join(' ');
+  const totalPts = trend.map((d, i) => `${x(i)},${y(d.total)}`).join(' ');
+
+  const openArea = `${x(0)},${y(0)} ${openPts} ${x(trend.length-1)},${y(0)}`;
+  const resArea = `${x(0)},${y(0)} ${resPts} ${x(trend.length-1)},${y(0)}`;
+
+  // Lines
+  const openLine = trend.map((d, i) => `${i === 0 ? 'M' : 'L'}${x(i)},${y(d.open)}`).join(' ');
+  const resLine = trend.map((d, i) => `${i === 0 ? 'M' : 'L'}${x(i)},${y(d.resolved)}`).join(' ');
+  const totalLine = trend.map((d, i) => `${i === 0 ? 'M' : 'L'}${x(i)},${y(d.total)}`).join(' ');
+
+  // Interactive dots
+  const dotR = 5;
+  const openDots = trend.map((d, i) =>
+    `<circle cx="${x(i)}" cy="${y(d.open)}" r="${dotR}" fill="#2a2aff" stroke="#fff" stroke-width="2" class="trend-dot" data-week="${d.week}" data-open="${d.open}" data-resolved="${d.resolved}" data-total="${d.total}" data-x="${x(i)}" data-y="${y(d.open)}"/>`
+  ).join('');
+  const resDots = trend.map((d, i) =>
+    `<circle cx="${x(i)}" cy="${y(d.resolved)}" r="${dotR}" fill="#10b981" stroke="#fff" stroke-width="2" class="trend-dot" data-week="${d.week}" data-open="${d.open}" data-resolved="${d.resolved}" data-total="${d.total}" data-x="${x(i)}" data-y="${y(d.resolved)}"/>`
+  ).join('');
+  const totalDots = trend.map((d, i) =>
+    `<circle cx="${x(i)}" cy="${y(d.total)}" r="${dotR}" fill="#999" stroke="#fff" stroke-width="2" class="trend-dot" data-week="${d.week}" data-open="${d.open}" data-resolved="${d.resolved}" data-total="${d.total}" data-x="${x(i)}" data-y="${y(d.total)}"/>`
+  ).join('');
+
+  return `
+    <polygon points="${openArea}" fill="rgba(42,42,255,0.06)"/>
+    <polygon points="${resArea}" fill="rgba(16,185,129,0.06)"/>
+    ${grid}
+    ${xLabels}
+    <path d="${totalLine}" fill="none" stroke="#d4d4d4" stroke-width="2" stroke-dasharray="6,4"/>
+    <path d="${openLine}" fill="none" stroke="#2a2aff" stroke-width="2.5"/>
+    <path d="${resLine}" fill="none" stroke="#10b981" stroke-width="2.5"/>
+    ${totalDots}
+    ${openDots}
+    ${resDots}
+  `;
+}
+
+/* ---- Pipeline builder ---- */
+function buildPipeline(byStatus) {
+  // Pipeline order: Pending → Working → Addressed → Done
+  // Side branches: Stuck, Retest Failed
+  const stages = [
+    { key: 'Pending Prioritisation', label: 'Pending', color: '#8b5cf6' },
+    { key: 'Working on it', label: 'Working', color: '#f59e0b' },
+    { key: 'Addressed (Ready for Re-Test)', label: 'Addressed', color: '#3b82f6' },
+    { key: 'Done (REQ APPROVED)', label: 'Done', color: '#10b981' },
+  ];
+  const branches = [
+    { key: 'Stuck', label: 'Stuck', color: '#ef4444' },
+    { key: 'Retest unsuccessful', label: 'Retest Failed', color: '#dc2626' },
+  ];
+  const total = Object.values(byStatus).reduce((s, v) => s + v, 0);
+
+  const stageHTML = stages.map((s, i) => {
+    const count = byStatus[s.key] || 0;
+    const pct = total > 0 ? Math.round((count / total) * 100) : 0;
+    const arrow = i < stages.length - 1
+      ? `<span class="pipeline-arrow">\u25B6</span>`
+      : '';
+    return `
+      <div class="pipeline-stage">
+        <div class="pipeline-value" style="color:${s.color}">${count}</div>
+        <div class="pipeline-label">${s.label}</div>
+        <div class="pipeline-pct">${pct}%</div>
+        <div class="pipeline-bar" style="background:${s.color};opacity:0.15"></div>
+        ${arrow}
+      </div>
+    `;
+  }).join('');
+
+  const branchHTML = branches.map(b => {
+    const count = byStatus[b.key] || 0;
+    return `
+      <div class="pipeline-summary-cell">
+        <div class="pipeline-summary-value" style="color:${b.color}">${count}</div>
+        <div>
+          <div class="pipeline-summary-label">${b.label}</div>
+          <div class="pipeline-summary-text">issues requiring attention</div>
+        </div>
+      </div>
+    `;
+  }).join('');
+
+  return `
+    <div class="pipeline-flow">${stageHTML}</div>
+    <div class="pipeline-summary">${branchHTML}</div>
+  `;
+}
+
 function render(data) {
   const app = document.getElementById('app');
   const o = data.counts.total_open, r = data.counts.resolved, t = data.counts.total_all;
@@ -311,6 +495,10 @@ function render(data) {
   const themes = Object.entries(data.themes).sort((a, b) => b[1].count - a[1].count);
   const ageBuckets = ['<14_days', '14-30_days', '30-40_days', '40-50_days', '>50_days'];
   const maxA = Math.max(...ageBuckets.map(k => data.age_analysis.buckets[k]?.count || 0));
+
+  // Trend data
+  const hasTrend = data.trend && data.trend.length > 1;
+  const trendSVG = hasTrend ? buildTrendSVG(data.trend) : '';
 
   app.innerHTML = `
     <!-- Nav -->
@@ -361,10 +549,40 @@ function render(data) {
       </div>
     </div>
 
-    <!-- [02] Distribution -->
+    ${hasTrend ? `
+    <!-- [02] Weekly Trend -->
     <div class="container">
       <div class="section">
-        <div class="section-label"><span class="num">02</span> Distribution</div>
+        <div class="section-label"><span class="num">02</span> Weekly Trend</div>
+        <div class="trend-wrap" id="trend-wrap">
+          <svg class="trend-svg" viewBox="0 0 960 320" preserveAspectRatio="xMidYMid meet">
+            ${trendSVG}
+          </svg>
+          <div class="trend-tooltip" id="trend-tooltip"></div>
+          <div class="trend-legend">
+            <div class="trend-legend-item"><div class="trend-legend-swatch" style="background:#2a2aff"></div>Open issues</div>
+            <div class="trend-legend-item"><div class="trend-legend-swatch" style="background:#10b981"></div>Resolved</div>
+            <div class="trend-legend-item"><div class="trend-legend-swatch" style="background:#d4d4d4"></div>Total logged</div>
+          </div>
+        </div>
+      </div>
+    </div>
+    ` : ''}
+
+    <!-- [03] Status Pipeline -->
+    <div class="container">
+      <div class="section">
+        <div class="section-label"><span class="num">03</span> Status Pipeline</div>
+        <div class="pipeline-wrap">
+          ${buildPipeline(data.counts.by_status)}
+        </div>
+      </div>
+    </div>
+
+    <!-- [04] Distribution -->
+    <div class="container">
+      <div class="section">
+        <div class="section-label"><span class="num">04</span> Distribution</div>
         <div class="two-col">
           <div>
             <div class="col-title">By Status</div>
@@ -396,10 +614,10 @@ function render(data) {
       </div>
     </div>
 
-    <!-- [03] Themes -->
+    <!-- [05] Themes -->
     <div class="container">
       <div class="section">
-        <div class="section-label"><span class="num">03</span> Issue Themes</div>
+        <div class="section-label"><span class="num">05</span> Issue Themes</div>
         <div class="theme-list">
           ${themes.map(([name, th], i) => `
             <div class="theme-item${i === 0 ? ' open' : ''}" onclick="toggleTheme(this)">
@@ -430,10 +648,10 @@ function render(data) {
       </div>
     </div>
 
-    <!-- [04] Age Analysis -->
+    <!-- [06] Age Analysis -->
     <div class="container">
       <div class="section">
-        <div class="section-label"><span class="num">04</span> Issue Age</div>
+        <div class="section-label"><span class="num">06</span> Issue Age</div>
         <div class="two-col">
           <div>
             <div class="col-title">Age Distribution</div>
@@ -464,10 +682,10 @@ function render(data) {
       </div>
     </div>
 
-    <!-- [05] New This Week -->
+    <!-- [07] New This Week -->
     <div class="container">
       <div class="section">
-        <div class="section-label"><span class="num">05</span> New Since Last Digest</div>
+        <div class="section-label"><span class="num">07</span> New Since Last Digest</div>
         ${data.new_since_last_digest.issues.map(issue => `
           <div class="new-issue">
             <div class="new-issue-date">${issue.date.slice(5)}</div>
@@ -485,10 +703,10 @@ function render(data) {
       </div>
     </div>
 
-    <!-- [06] Protocols -->
+    <!-- [08] Protocols -->
     <div class="container">
       <div class="section" style="border-bottom:none">
-        <div class="section-label"><span class="num">06</span> Protocols Tested</div>
+        <div class="section-label"><span class="num">08</span> Protocols Tested</div>
         <div class="protocol-grid">
           ${data.protocols_tested.map(p => `<div class="protocol-cell">${p}</div>`).join('')}
         </div>
@@ -507,6 +725,54 @@ function render(data) {
       </div>
     </div>
   `;
+
+  // Wire up trend tooltips
+  if (hasTrend) {
+    initTrendTooltips();
+  }
+}
+
+function initTrendTooltips() {
+  const wrap = document.getElementById('trend-wrap');
+  const tip = document.getElementById('trend-tooltip');
+  if (!wrap || !tip) return;
+
+  const svg = wrap.querySelector('.trend-svg');
+  const dots = svg.querySelectorAll('.trend-dot');
+
+  dots.forEach(dot => {
+    dot.addEventListener('mouseenter', (e) => {
+      const week = dot.getAttribute('data-week');
+      const open = dot.getAttribute('data-open');
+      const resolved = dot.getAttribute('data-resolved');
+      const total = dot.getAttribute('data-total');
+
+      tip.innerHTML = `${week}<br>Open: ${open} &middot; Resolved: ${resolved} &middot; Total: ${total}`;
+
+      // Position tooltip relative to the SVG wrapper
+      const wrapRect = wrap.getBoundingClientRect();
+      const svgRect = svg.getBoundingClientRect();
+      const dotX = parseFloat(dot.getAttribute('data-x'));
+      const dotY = parseFloat(dot.getAttribute('data-y'));
+
+      // Convert SVG coords to pixel coords
+      const scaleX = svgRect.width / 960;
+      const scaleY = svgRect.height / 320;
+      const pixelX = svgRect.left - wrapRect.left + dotX * scaleX;
+      const pixelY = svgRect.top - wrapRect.top + dotY * scaleY;
+
+      tip.style.left = pixelX + 'px';
+      tip.style.top = pixelY + 'px';
+      tip.classList.add('visible');
+
+      dot.setAttribute('r', '7');
+    });
+
+    dot.addEventListener('mouseleave', () => {
+      tip.classList.remove('visible');
+      dot.setAttribute('r', '5');
+    });
+  });
 }
 
 function toggleTheme(el) {
