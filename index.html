@@ -631,16 +631,14 @@ function render(data) {
               <div class="theme-body">
                 ${th.issue_groups.map(issue => `
                   <div class="issue-row">
-                    <div class="issue-name">${issue.name}</div>
+                    <div style="display:flex;align-items:center;gap:10px;margin-bottom:4px">
+                      <div class="issue-name" style="margin-bottom:0">${issue.name}</div>
+                      ${issue.status ? badge(issue.status) : ''}
+                    </div>
                     ${issue.protocols.length ? `<div class="issue-protocols">${issue.protocols.join(' / ')}</div>` : ''}
                     ${issue.desc_snippet ? `<div class="issue-desc">${issue.desc_snippet}</div>` : ''}
                   </div>
                 `).join('')}
-                <div class="theme-status-summary">
-                  ${Object.entries(th.statuses).map(([s, n]) =>
-                    `${badge(s)} <span style="font-size:13px;color:var(--text-muted);margin-right:4px">${n}</span>`
-                  ).join('')}
-                </div>
               </div>
             </div>
           `).join('')}

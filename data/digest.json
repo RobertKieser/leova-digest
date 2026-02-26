@@ -36,44 +36,65 @@
         {
           "name": "SoE not accurate",
           "count": 1,
-          "protocols": ["Albendazole Tablets"],
-          "desc_snippet": "The Albendazole Tablets protocol shows the following issues when pulling the schedule of procedures: Leaves out an entire page of procedures..."
+          "protocols": [
+            "Albendazole Tablets"
+          ],
+          "desc_snippet": "The Albendazole Tablets protocol shows the following issues when pulling the schedule of procedures: Leaves out an entire page of procedures...",
+          "status": "Working on it"
         },
         {
           "name": "SoE not pulling through",
           "count": 1,
-          "protocols": ["MATCH sub-protocol"],
-          "desc_snippet": "The MATCH sub-protocol is showing an empty SoE despite having one in the protocol document (page 34)."
+          "protocols": [
+            "MATCH sub-protocol"
+          ],
+          "desc_snippet": "The MATCH sub-protocol is showing an empty SoE despite having one in the protocol document (page 34).",
+          "status": "Retest unsuccessful"
         },
         {
           "name": "SoE not pulling through (Pneumococcal)",
           "count": 1,
-          "protocols": ["Pneumococcal Phase 2"],
-          "desc_snippet": "Pneumococcal Phase 2 is showing an empty SoE despite having one in the protocol document (page 16-17)."
+          "protocols": [
+            "Pneumococcal Phase 2"
+          ],
+          "desc_snippet": "Pneumococcal Phase 2 is showing an empty SoE despite having one in the protocol document (page 16-17).",
+          "status": "Stuck"
         },
         {
           "name": "SoE still not accurate after prompt updates",
           "count": 1,
-          "protocols": ["Albendazole Tablets"],
-          "desc_snippet": "Renamed and uploaded Albendazole tablets again. Still left out the middle page and while 1 tick was moved, extraction remains inaccurate."
+          "protocols": [
+            "Albendazole Tablets"
+          ],
+          "desc_snippet": "Renamed and uploaded Albendazole tablets again. Still left out the middle page and while 1 tick was moved, extraction remains inaccurate.",
+          "status": "Working on it"
         },
         {
           "name": "LLM not accurate on standard terminology",
           "count": 1,
-          "protocols": ["BRILLIANT-001"],
-          "desc_snippet": "The LLM interpreted SAE as \"Special Adverse Event\" while the standard is Serious Adverse Events."
+          "protocols": [
+            "BRILLIANT-001"
+          ],
+          "desc_snippet": "The LLM interpreted SAE as \"Special Adverse Event\" while the standard is Serious Adverse Events.",
+          "status": "Addressed (Ready for Re-Test)"
         },
         {
           "name": "CRFs not pulling through from edited SoE",
           "count": 1,
-          "protocols": ["HVTN100_EL"],
-          "desc_snippet": "Edited the SoE in the protocol journey: deleted Unblinding, added a new procedure, edited a procedure name. CRFs didn't reflect changes."
+          "protocols": [
+            "HVTN100_EL"
+          ],
+          "desc_snippet": "Edited the SoE in the protocol journey: deleted Unblinding, added a new procedure, edited a procedure name. CRFs didn't reflect changes.",
+          "status": "Addressed (Ready for Re-Test)"
         },
         {
           "name": "SoE Visit names incorrect",
           "count": 1,
-          "protocols": ["BRILLIANT-001"],
-          "desc_snippet": "Protocol names visits 01 to 12 where 01 is screening. LEOVA labels them Screen to Health Contact instead."
+          "protocols": [
+            "BRILLIANT-001"
+          ],
+          "desc_snippet": "Protocol names visits 01 to 12 where 01 is screening. LEOVA labels them Screen to Health Contact instead.",
+          "status": "Addressed (Ready for Re-Test)"
         }
       ]
     },
@@ -87,38 +108,54 @@
         {
           "name": "Added CRF does not display at all",
           "count": 1,
-          "protocols": ["Efficacy and safety of Astragalus"],
-          "desc_snippet": "Added a CRF that would be manually generated but it didn't appear in the Form content overview screen."
+          "protocols": [
+            "Efficacy and safety of Astragalus"
+          ],
+          "desc_snippet": "Added a CRF that would be manually generated but it didn't appear in the Form content overview screen.",
+          "status": "Addressed (Ready for Re-Test)"
         },
         {
           "name": "CM form missing the coded values",
           "count": 1,
-          "protocols": ["HVTN 100_EL"],
-          "desc_snippet": "Coded values are available in the excel version but don't appear in the document."
+          "protocols": [
+            "HVTN 100_EL"
+          ],
+          "desc_snippet": "Coded values are available in the excel version but don't appear in the document.",
+          "status": "Addressed (Ready for Re-Test)"
         },
         {
           "name": "Exceptionally long run time to generate form content",
           "count": 1,
-          "protocols": ["Prot_SAP_ICF_000"],
-          "desc_snippet": "Cached results are available but it takes an exceptionally long time for the data flow to run."
+          "protocols": [
+            "Prot_SAP_ICF_000"
+          ],
+          "desc_snippet": "Cached results are available but it takes an exceptionally long time for the data flow to run.",
+          "status": "Pending Prioritisation"
         },
         {
           "name": "Form content not generating until refresh",
           "count": 1,
-          "protocols": ["BRILLIANT-001"],
-          "desc_snippet": "Clicked on the AOU form and nothing came up. Refreshed the page, received an error, then it loaded."
+          "protocols": [
+            "BRILLIANT-001"
+          ],
+          "desc_snippet": "Clicked on the AOU form and nothing came up. Refreshed the page, received an error, then it loaded.",
+          "status": "Addressed (Ready for Re-Test)"
         },
         {
           "name": "Form content not completely editable",
           "count": 1,
-          "protocols": ["BRILLIANT-001"],
-          "desc_snippet": "No function to delete or add fields. Only field content can be edited."
+          "protocols": [
+            "BRILLIANT-001"
+          ],
+          "desc_snippet": "No function to delete or add fields. Only field content can be edited.",
+          "status": "Addressed (Ready for Re-Test)"
         },
         {
           "name": "Demographics form has 2 duplicate fields (RACEOTH)",
           "count": 1,
           "protocols": [],
-          "desc_snippet": "Demographics form has duplicate RACEOTH fields."
+          "desc_snippet": "Demographics form has duplicate RACEOTH fields.",
+          "status": "Addressed (Ready for Re-Test)"
         }
       ]
     },
@@ -132,26 +169,40 @@
         {
           "name": "Incorrect progress bar - not aligned with dataflow",
           "count": 1,
-          "protocols": ["DREAMM", "acamprosate"],
-          "desc_snippet": "Progress bar indicates task is complete when generating schedule of forms, yet no content is displayed."
+          "protocols": [
+            "DREAMM",
+            "acamprosate"
+          ],
+          "desc_snippet": "Progress bar indicates task is complete when generating schedule of forms, yet no content is displayed.",
+          "status": "Addressed (Ready for Re-Test)"
         },
         {
           "name": "Schedule of forms not generating",
           "count": 1,
-          "protocols": ["HVTN 100_EL"],
-          "desc_snippet": "Waited 18 minutes but Schedule of forms didn't generate. Perhaps because of changes earlier in the process."
+          "protocols": [
+            "HVTN 100_EL"
+          ],
+          "desc_snippet": "Waited 18 minutes but Schedule of forms didn't generate. Perhaps because of changes earlier in the process.",
+          "status": "Addressed (Ready for Re-Test)"
         },
         {
           "name": "Rules generated inappropriately",
           "count": 1,
-          "protocols": ["BRILLIANT-001", "RESOVIR"],
-          "desc_snippet": "Form display logic conditional rules don't make sense for RESOVIR protocol."
+          "protocols": [
+            "BRILLIANT-001",
+            "RESOVIR"
+          ],
+          "desc_snippet": "Form display logic conditional rules don't make sense for RESOVIR protocol.",
+          "status": "Working on it"
         },
         {
           "name": "Conditional rules do not match schedule of forms",
           "count": 1,
-          "protocols": ["BRILLIANT-001"],
-          "desc_snippet": "After confirming schedule of forms, rules appear in the table but no conditional ticks in the schedule."
+          "protocols": [
+            "BRILLIANT-001"
+          ],
+          "desc_snippet": "After confirming schedule of forms, rules appear in the table but no conditional ticks in the schedule.",
+          "status": "Working on it"
         }
       ]
     },
@@ -166,26 +217,38 @@
         {
           "name": "CM Procedure not allocated per protocol",
           "count": 1,
-          "protocols": ["Efficacy and safety of Astragalus"],
-          "desc_snippet": "CM is supposed to be a procedure at screening visit per protocol but the checkbox is blank."
+          "protocols": [
+            "Efficacy and safety of Astragalus"
+          ],
+          "desc_snippet": "CM is supposed to be a procedure at screening visit per protocol but the checkbox is blank.",
+          "status": "Stuck"
         },
         {
           "name": "Procedures allocated incorrectly",
           "count": 1,
-          "protocols": ["BRILLIANT-001"],
-          "desc_snippet": "Vaccination occurs at incorrect visits in LEOVA compared to protocol schedule."
+          "protocols": [
+            "BRILLIANT-001"
+          ],
+          "desc_snippet": "Vaccination occurs at incorrect visits in LEOVA compared to protocol schedule.",
+          "status": "Addressed (Ready for Re-Test)"
         },
         {
           "name": "Clinical labs allocated incorrectly",
           "count": 1,
-          "protocols": ["BRILLIANT-001"],
-          "desc_snippet": "Pregnancy marked 1 visit too soon in LEOVA for last 3 tests."
+          "protocols": [
+            "BRILLIANT-001"
+          ],
+          "desc_snippet": "Pregnancy marked 1 visit too soon in LEOVA for last 3 tests.",
+          "status": "Working on it"
         },
         {
           "name": "Research samples allocated incorrectly",
           "count": 1,
-          "protocols": ["BRILLIANT-001"],
-          "desc_snippet": "Protocol D294 Leukophoresis, PBMC and Serum assays are allocated to Day 280 instead of D294."
+          "protocols": [
+            "BRILLIANT-001"
+          ],
+          "desc_snippet": "Protocol D294 Leukophoresis, PBMC and Serum assays are allocated to Day 280 instead of D294.",
+          "status": "Working on it"
         }
       ]
     },
@@ -199,20 +262,29 @@
         {
           "name": "Protocol upload stalled (Phase 2 ACLF)",
           "count": 1,
-          "protocols": ["Phase 2 ACLF"],
-          "desc_snippet": "After half an hour it was still thinking. Tried refresh but got a 505 error."
+          "protocols": [
+            "Phase 2 ACLF"
+          ],
+          "desc_snippet": "After half an hour it was still thinking. Tried refresh but got a 505 error.",
+          "status": "Stuck"
         },
         {
           "name": "Protocol upload fail (MATCH)",
           "count": 1,
-          "protocols": ["MATCH sub-protocol"],
-          "desc_snippet": "Uploaded Match and was directed to an error page. Uploaded again and the 2 button screen came up."
+          "protocols": [
+            "MATCH sub-protocol"
+          ],
+          "desc_snippet": "Uploaded Match and was directed to an error page. Uploaded again and the 2 button screen came up.",
+          "status": "Addressed (Ready for Re-Test)"
         },
         {
           "name": "Protocol upload failed (Pneumococcal)",
           "count": 1,
-          "protocols": ["Pneumococcal Phase 2"],
-          "desc_snippet": "Document finished processing but blank page is available for schedule of procedures."
+          "protocols": [
+            "Pneumococcal Phase 2"
+          ],
+          "desc_snippet": "Document finished processing but blank page is available for schedule of procedures.",
+          "status": "Stuck"
         }
       ]
     },
@@ -225,14 +297,20 @@
         {
           "name": "Two CRFs generated for same procedure",
           "count": 1,
-          "protocols": ["EVOS"],
-          "desc_snippet": "Duplicate CRF generated for the same procedure."
+          "protocols": [
+            "EVOS"
+          ],
+          "desc_snippet": "Duplicate CRF generated for the same procedure.",
+          "status": "Addressed (Ready for Re-Test)"
         },
         {
           "name": "Added procedure not pulling into CRF table",
           "count": 1,
-          "protocols": ["BRILLIANT-001"],
-          "desc_snippet": "Added a procedure to the SoE but it does not appear in the List of CRFs."
+          "protocols": [
+            "BRILLIANT-001"
+          ],
+          "desc_snippet": "Added a procedure to the SoE but it does not appear in the List of CRFs.",
+          "status": "Addressed (Ready for Re-Test)"
         }
       ]
     },
@@ -246,14 +324,20 @@
         {
           "name": "CRFs are in random order",
           "count": 1,
-          "protocols": ["Efficacy and safety of Astragalus"],
-          "desc_snippet": "CRFs seem to be in a random order: not alphabetical, not per SoE, nor by form type."
+          "protocols": [
+            "Efficacy and safety of Astragalus"
+          ],
+          "desc_snippet": "CRFs seem to be in a random order: not alphabetical, not per SoE, nor by form type.",
+          "status": "Stuck"
         },
         {
           "name": "CRFs in random order (HVTN)",
           "count": 1,
-          "protocols": ["Prot_SAP_ICF_000"],
-          "desc_snippet": "The CRFs are not in order of the Schedule of Events, nor any other logical system."
+          "protocols": [
+            "Prot_SAP_ICF_000"
+          ],
+          "desc_snippet": "The CRFs are not in order of the Schedule of Events, nor any other logical system.",
+          "status": "Addressed (Ready for Re-Test)"
         }
       ]
     },
@@ -266,14 +350,20 @@
         {
           "name": "Range of checks generated",
           "count": 1,
-          "protocols": ["TB Substudy"],
-          "desc_snippet": "Edit checks mostly centre around dates not aligning (more than 50% of checks)."
+          "protocols": [
+            "TB Substudy"
+          ],
+          "desc_snippet": "Edit checks mostly centre around dates not aligning (more than 50% of checks).",
+          "status": "Pending Prioritisation"
         },
         {
           "name": "Some edit checks reference only one field",
           "count": 1,
-          "protocols": ["TB Substudy"],
-          "desc_snippet": "Some edit checks don't make sense as they only look at one field value."
+          "protocols": [
+            "TB Substudy"
+          ],
+          "desc_snippet": "Some edit checks don't make sense as they only look at one field value.",
+          "status": "Pending Prioritisation"
         }
       ]
     },
@@ -286,14 +376,18 @@
         {
           "name": "Editing Visit name cleared the SoE",
           "count": 1,
-          "protocols": ["BRILLIANT-001"],
-          "desc_snippet": "When visit names were corrected, all the markings/ticks in the SoE were cleared."
+          "protocols": [
+            "BRILLIANT-001"
+          ],
+          "desc_snippet": "When visit names were corrected, all the markings/ticks in the SoE were cleared.",
+          "status": "Pending Prioritisation"
         },
         {
           "name": "Adding visits doesn't auto-update sequential numbers",
           "count": 1,
           "protocols": [],
-          "desc_snippet": "When adding visits, the visit numbers don't automatically become consecutive."
+          "desc_snippet": "When adding visits, the visit numbers don't automatically become consecutive.",
+          "status": "Pending Prioritisation"
         }
       ]
     },
@@ -306,8 +400,11 @@
         {
           "name": "Rules generated inappropriately (HVTN)",
           "count": 1,
-          "protocols": ["HVTN 100"],
-          "desc_snippet": "Vaccination form is marked conditional but will always be required on a study assessing vaccinations."
+          "protocols": [
+            "HVTN 100"
+          ],
+          "desc_snippet": "Vaccination form is marked conditional but will always be required on a study assessing vaccinations.",
+          "status": "Working on it"
         }
       ]
     },
@@ -323,50 +420,73 @@
         {
           "name": "No table for Visit based forms yet",
           "count": 1,
-          "protocols": ["Efficacy and safety of Astragalus"],
-          "desc_snippet": "No forms listed under visit based forms. 3 CRFs listed as log forms including one that shouldn't be."
+          "protocols": [
+            "Efficacy and safety of Astragalus"
+          ],
+          "desc_snippet": "No forms listed under visit based forms. 3 CRFs listed as log forms including one that shouldn't be.",
+          "status": "Stuck"
         },
         {
           "name": "Column header numbers not sequential",
           "count": 1,
-          "protocols": ["RESOVIR"],
-          "desc_snippet": "Top row of the SoE table should have column headers with sequential numbers."
+          "protocols": [
+            "RESOVIR"
+          ],
+          "desc_snippet": "Top row of the SoE table should have column headers with sequential numbers.",
+          "status": "Working on it"
         },
         {
           "name": "Manual form classified as log form",
           "count": 1,
-          "protocols": ["RESOVIR"],
-          "desc_snippet": "Leova classified a manual form as a log form rather than a visit based form."
+          "protocols": [
+            "RESOVIR"
+          ],
+          "desc_snippet": "Leova classified a manual form as a log form rather than a visit based form.",
+          "status": "Pending Prioritisation"
         },
         {
           "name": "Form display logic not displaying",
           "count": 1,
-          "protocols": ["Prot_SAP_ICF_000"],
-          "desc_snippet": "After confirming CRFs, screen moves quickly to form display logic but data isn't populated yet."
+          "protocols": [
+            "Prot_SAP_ICF_000"
+          ],
+          "desc_snippet": "After confirming CRFs, screen moves quickly to form display logic but data isn't populated yet.",
+          "status": "Addressed (Ready for Re-Test)"
         },
         {
           "name": "Leova logo missing on excel output",
           "count": 1,
           "protocols": [],
-          "desc_snippet": "Leova logo not visible on any of the excel downloads."
+          "desc_snippet": "Leova logo not visible on any of the excel downloads.",
+          "status": "Working on it"
         },
         {
           "name": "Cache not referenced after EDC mapping",
           "count": 1,
-          "protocols": ["MATCH sub-protocol", "Prot_SAP_ICF_000"],
-          "desc_snippet": "Dataflow before writing export task should reference cache if no changes to the data flow."
+          "protocols": [
+            "MATCH sub-protocol",
+            "Prot_SAP_ICF_000"
+          ],
+          "desc_snippet": "Dataflow before writing export task should reference cache if no changes to the data flow.",
+          "status": "Working on it"
         },
         {
           "name": "Date Modified not functional",
           "count": 1,
-          "protocols": ["A Randomised Trial... Amblyopia in Children"],
-          "desc_snippet": "Date modified on generated CRFs should reflect actual last modified date, but all say 28-12-2024."
+          "protocols": [
+            "A Randomised Trial... Amblyopia in Children"
+          ],
+          "desc_snippet": "Date modified on generated CRFs should reflect actual last modified date, but all say 28-12-2024.",
+          "status": "Pending Prioritisation"
         },
         {
           "name": "Edit saves even when Cancel is selected",
           "count": 1,
-          "protocols": ["HVTN 100_EL"],
-          "desc_snippet": "Edited a CRF and selected Cancel instead of Save, but changes were still saved."
+          "protocols": [
+            "HVTN 100_EL"
+          ],
+          "desc_snippet": "Edited a CRF and selected Cancel instead of Save, but changes were still saved.",
+          "status": "Addressed (Ready for Re-Test)"
         }
       ]
     }
@@ -500,7 +620,11 @@
       }
     ]
   },
-  "testers": ["Annie Joubert", "Erica Lazarus", "Shirley Collie"],
+  "testers": [
+    "Annie Joubert",
+    "Erica Lazarus",
+    "Shirley Collie"
+  ],
   "protocols_tested": [
     "A Randomised Trial... Amblyopia in Children",
     "Albendazole Tablets",
@@ -519,14 +643,62 @@
     "acamprosate"
   ],
   "trend": [
-    {"week": "W02", "date": "2026-01-12", "open": 25, "resolved": 0,  "total": 25},
-    {"week": "W03", "date": "2026-01-16", "open": 34, "resolved": 0,  "total": 34},
-    {"week": "W04", "date": "2026-01-23", "open": 50, "resolved": 0,  "total": 50},
-    {"week": "W05", "date": "2026-01-30", "open": 58, "resolved": 0,  "total": 58},
-    {"week": "W06", "date": "2026-02-05", "open": 48, "resolved": 16, "total": 64},
-    {"week": "W07", "date": "2026-02-12", "open": 41, "resolved": 25, "total": 66},
-    {"week": "W08", "date": "2026-02-20", "open": 44, "resolved": 25, "total": 69},
-    {"week": "W09", "date": "2026-02-26", "open": 45, "resolved": 28, "total": 73}
+    {
+      "week": "W02",
+      "date": "2026-01-12",
+      "open": 25,
+      "resolved": 0,
+      "total": 25
+    },
+    {
+      "week": "W03",
+      "date": "2026-01-16",
+      "open": 34,
+      "resolved": 0,
+      "total": 34
+    },
+    {
+      "week": "W04",
+      "date": "2026-01-23",
+      "open": 50,
+      "resolved": 0,
+      "total": 50
+    },
+    {
+      "week": "W05",
+      "date": "2026-01-30",
+      "open": 58,
+      "resolved": 0,
+      "total": 58
+    },
+    {
+      "week": "W06",
+      "date": "2026-02-05",
+      "open": 48,
+      "resolved": 16,
+      "total": 64
+    },
+    {
+      "week": "W07",
+      "date": "2026-02-12",
+      "open": 41,
+      "resolved": 25,
+      "total": 66
+    },
+    {
+      "week": "W08",
+      "date": "2026-02-20",
+      "open": 44,
+      "resolved": 25,
+      "total": 69
+    },
+    {
+      "week": "W09",
+      "date": "2026-02-26",
+      "open": 45,
+      "resolved": 28,
+      "total": 73
+    }
   ],
   "date_range": {
     "earliest": "2025-11-25",
