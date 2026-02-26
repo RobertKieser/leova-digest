@@ -1,0 +1,534 @@
+{
+  "generated": "2026-02-26",
+  "week_id": "2026-W09",
+  "counts": {
+    "total_open": 45,
+    "resolved": 28,
+    "total_all": 73,
+    "parent_brs_open": 18,
+    "by_status": {
+      "Done (REQ APPROVED)": 28,
+      "Working on it": 10,
+      "Retest unsuccessful": 1,
+      "Stuck": 9,
+      "Addressed (Ready for Re-Test)": 17,
+      "Pending Prioritisation": 8
+    },
+    "by_journey": {
+      "Protocol Journey": 18,
+      "Form Display Logic": 6,
+      "CRF Journey": 15,
+      "Edit Checks": 2,
+      "Export": 2,
+      "General Requirements": 2
+    }
+  },
+  "themes": {
+    "SoE Extraction": {
+      "count": 7,
+      "statuses": {
+        "Working on it": 2,
+        "Retest unsuccessful": 1,
+        "Stuck": 1,
+        "Addressed (Ready for Re-Test)": 3
+      },
+      "issue_groups": [
+        {
+          "name": "SoE not accurate",
+          "count": 1,
+          "protocols": ["Albendazole Tablets"],
+          "desc_snippet": "The Albendazole Tablets protocol shows the following issues when pulling the schedule of procedures: Leaves out an entire page of procedures..."
+        },
+        {
+          "name": "SoE not pulling through",
+          "count": 1,
+          "protocols": ["MATCH sub-protocol"],
+          "desc_snippet": "The MATCH sub-protocol is showing an empty SoE despite having one in the protocol document (page 34)."
+        },
+        {
+          "name": "SoE not pulling through (Pneumococcal)",
+          "count": 1,
+          "protocols": ["Pneumococcal Phase 2"],
+          "desc_snippet": "Pneumococcal Phase 2 is showing an empty SoE despite having one in the protocol document (page 16-17)."
+        },
+        {
+          "name": "SoE still not accurate after prompt updates",
+          "count": 1,
+          "protocols": ["Albendazole Tablets"],
+          "desc_snippet": "Renamed and uploaded Albendazole tablets again. Still left out the middle page and while 1 tick was moved, extraction remains inaccurate."
+        },
+        {
+          "name": "LLM not accurate on standard terminology",
+          "count": 1,
+          "protocols": ["BRILLIANT-001"],
+          "desc_snippet": "The LLM interpreted SAE as \"Special Adverse Event\" while the standard is Serious Adverse Events."
+        },
+        {
+          "name": "CRFs not pulling through from edited SoE",
+          "count": 1,
+          "protocols": ["HVTN100_EL"],
+          "desc_snippet": "Edited the SoE in the protocol journey: deleted Unblinding, added a new procedure, edited a procedure name. CRFs didn't reflect changes."
+        },
+        {
+          "name": "SoE Visit names incorrect",
+          "count": 1,
+          "protocols": ["BRILLIANT-001"],
+          "desc_snippet": "Protocol names visits 01 to 12 where 01 is screening. LEOVA labels them Screen to Health Contact instead."
+        }
+      ]
+    },
+    "Form Content": {
+      "count": 6,
+      "statuses": {
+        "Addressed (Ready for Re-Test)": 5,
+        "Pending Prioritisation": 1
+      },
+      "issue_groups": [
+        {
+          "name": "Added CRF does not display at all",
+          "count": 1,
+          "protocols": ["Efficacy and safety of Astragalus"],
+          "desc_snippet": "Added a CRF that would be manually generated but it didn't appear in the Form content overview screen."
+        },
+        {
+          "name": "CM form missing the coded values",
+          "count": 1,
+          "protocols": ["HVTN 100_EL"],
+          "desc_snippet": "Coded values are available in the excel version but don't appear in the document."
+        },
+        {
+          "name": "Exceptionally long run time to generate form content",
+          "count": 1,
+          "protocols": ["Prot_SAP_ICF_000"],
+          "desc_snippet": "Cached results are available but it takes an exceptionally long time for the data flow to run."
+        },
+        {
+          "name": "Form content not generating until refresh",
+          "count": 1,
+          "protocols": ["BRILLIANT-001"],
+          "desc_snippet": "Clicked on the AOU form and nothing came up. Refreshed the page, received an error, then it loaded."
+        },
+        {
+          "name": "Form content not completely editable",
+          "count": 1,
+          "protocols": ["BRILLIANT-001"],
+          "desc_snippet": "No function to delete or add fields. Only field content can be edited."
+        },
+        {
+          "name": "Demographics form has 2 duplicate fields (RACEOTH)",
+          "count": 1,
+          "protocols": [],
+          "desc_snippet": "Demographics form has duplicate RACEOTH fields."
+        }
+      ]
+    },
+    "Schedule of Forms": {
+      "count": 4,
+      "statuses": {
+        "Addressed (Ready for Re-Test)": 2,
+        "Working on it": 2
+      },
+      "issue_groups": [
+        {
+          "name": "Incorrect progress bar - not aligned with dataflow",
+          "count": 1,
+          "protocols": ["DREAMM", "acamprosate"],
+          "desc_snippet": "Progress bar indicates task is complete when generating schedule of forms, yet no content is displayed."
+        },
+        {
+          "name": "Schedule of forms not generating",
+          "count": 1,
+          "protocols": ["HVTN 100_EL"],
+          "desc_snippet": "Waited 18 minutes but Schedule of forms didn't generate. Perhaps because of changes earlier in the process."
+        },
+        {
+          "name": "Rules generated inappropriately",
+          "count": 1,
+          "protocols": ["BRILLIANT-001", "RESOVIR"],
+          "desc_snippet": "Form display logic conditional rules don't make sense for RESOVIR protocol."
+        },
+        {
+          "name": "Conditional rules do not match schedule of forms",
+          "count": 1,
+          "protocols": ["BRILLIANT-001"],
+          "desc_snippet": "After confirming schedule of forms, rules appear in the table but no conditional ticks in the schedule."
+        }
+      ]
+    },
+    "Procedure-Visit Mapping": {
+      "count": 4,
+      "statuses": {
+        "Stuck": 1,
+        "Addressed (Ready for Re-Test)": 1,
+        "Working on it": 2
+      },
+      "issue_groups": [
+        {
+          "name": "CM Procedure not allocated per protocol",
+          "count": 1,
+          "protocols": ["Efficacy and safety of Astragalus"],
+          "desc_snippet": "CM is supposed to be a procedure at screening visit per protocol but the checkbox is blank."
+        },
+        {
+          "name": "Procedures allocated incorrectly",
+          "count": 1,
+          "protocols": ["BRILLIANT-001"],
+          "desc_snippet": "Vaccination occurs at incorrect visits in LEOVA compared to protocol schedule."
+        },
+        {
+          "name": "Clinical labs allocated incorrectly",
+          "count": 1,
+          "protocols": ["BRILLIANT-001"],
+          "desc_snippet": "Pregnancy marked 1 visit too soon in LEOVA for last 3 tests."
+        },
+        {
+          "name": "Research samples allocated incorrectly",
+          "count": 1,
+          "protocols": ["BRILLIANT-001"],
+          "desc_snippet": "Protocol D294 Leukophoresis, PBMC and Serum assays are allocated to Day 280 instead of D294."
+        }
+      ]
+    },
+    "Upload Infrastructure": {
+      "count": 3,
+      "statuses": {
+        "Stuck": 2,
+        "Addressed (Ready for Re-Test)": 1
+      },
+      "issue_groups": [
+        {
+          "name": "Protocol upload stalled (Phase 2 ACLF)",
+          "count": 1,
+          "protocols": ["Phase 2 ACLF"],
+          "desc_snippet": "After half an hour it was still thinking. Tried refresh but got a 505 error."
+        },
+        {
+          "name": "Protocol upload fail (MATCH)",
+          "count": 1,
+          "protocols": ["MATCH sub-protocol"],
+          "desc_snippet": "Uploaded Match and was directed to an error page. Uploaded again and the 2 button screen came up."
+        },
+        {
+          "name": "Protocol upload failed (Pneumococcal)",
+          "count": 1,
+          "protocols": ["Pneumococcal Phase 2"],
+          "desc_snippet": "Document finished processing but blank page is available for schedule of procedures."
+        }
+      ]
+    },
+    "CRF Generation": {
+      "count": 2,
+      "statuses": {
+        "Addressed (Ready for Re-Test)": 2
+      },
+      "issue_groups": [
+        {
+          "name": "Two CRFs generated for same procedure",
+          "count": 1,
+          "protocols": ["EVOS"],
+          "desc_snippet": "Duplicate CRF generated for the same procedure."
+        },
+        {
+          "name": "Added procedure not pulling into CRF table",
+          "count": 1,
+          "protocols": ["BRILLIANT-001"],
+          "desc_snippet": "Added a procedure to the SoE but it does not appear in the List of CRFs."
+        }
+      ]
+    },
+    "CRF List & Ordering": {
+      "count": 2,
+      "statuses": {
+        "Stuck": 1,
+        "Addressed (Ready for Re-Test)": 1
+      },
+      "issue_groups": [
+        {
+          "name": "CRFs are in random order",
+          "count": 1,
+          "protocols": ["Efficacy and safety of Astragalus"],
+          "desc_snippet": "CRFs seem to be in a random order: not alphabetical, not per SoE, nor by form type."
+        },
+        {
+          "name": "CRFs in random order (HVTN)",
+          "count": 1,
+          "protocols": ["Prot_SAP_ICF_000"],
+          "desc_snippet": "The CRFs are not in order of the Schedule of Events, nor any other logical system."
+        }
+      ]
+    },
+    "Edit Checks": {
+      "count": 2,
+      "statuses": {
+        "Pending Prioritisation": 2
+      },
+      "issue_groups": [
+        {
+          "name": "Range of checks generated",
+          "count": 1,
+          "protocols": ["TB Substudy"],
+          "desc_snippet": "Edit checks mostly centre around dates not aligning (more than 50% of checks)."
+        },
+        {
+          "name": "Some edit checks reference only one field",
+          "count": 1,
+          "protocols": ["TB Substudy"],
+          "desc_snippet": "Some edit checks don't make sense as they only look at one field value."
+        }
+      ]
+    },
+    "Cell/Table Editing": {
+      "count": 2,
+      "statuses": {
+        "Pending Prioritisation": 2
+      },
+      "issue_groups": [
+        {
+          "name": "Editing Visit name cleared the SoE",
+          "count": 1,
+          "protocols": ["BRILLIANT-001"],
+          "desc_snippet": "When visit names were corrected, all the markings/ticks in the SoE were cleared."
+        },
+        {
+          "name": "Adding visits doesn't auto-update sequential numbers",
+          "count": 1,
+          "protocols": [],
+          "desc_snippet": "When adding visits, the visit numbers don't automatically become consecutive."
+        }
+      ]
+    },
+    "Conditional Rules": {
+      "count": 1,
+      "statuses": {
+        "Working on it": 1
+      },
+      "issue_groups": [
+        {
+          "name": "Rules generated inappropriately (HVTN)",
+          "count": 1,
+          "protocols": ["HVTN 100"],
+          "desc_snippet": "Vaccination form is marked conditional but will always be required on a study assessing vaccinations."
+        }
+      ]
+    },
+    "Other": {
+      "count": 12,
+      "statuses": {
+        "Stuck": 4,
+        "Working on it": 3,
+        "Pending Prioritisation": 3,
+        "Addressed (Ready for Re-Test)": 2
+      },
+      "issue_groups": [
+        {
+          "name": "No table for Visit based forms yet",
+          "count": 1,
+          "protocols": ["Efficacy and safety of Astragalus"],
+          "desc_snippet": "No forms listed under visit based forms. 3 CRFs listed as log forms including one that shouldn't be."
+        },
+        {
+          "name": "Column header numbers not sequential",
+          "count": 1,
+          "protocols": ["RESOVIR"],
+          "desc_snippet": "Top row of the SoE table should have column headers with sequential numbers."
+        },
+        {
+          "name": "Manual form classified as log form",
+          "count": 1,
+          "protocols": ["RESOVIR"],
+          "desc_snippet": "Leova classified a manual form as a log form rather than a visit based form."
+        },
+        {
+          "name": "Form display logic not displaying",
+          "count": 1,
+          "protocols": ["Prot_SAP_ICF_000"],
+          "desc_snippet": "After confirming CRFs, screen moves quickly to form display logic but data isn't populated yet."
+        },
+        {
+          "name": "Leova logo missing on excel output",
+          "count": 1,
+          "protocols": [],
+          "desc_snippet": "Leova logo not visible on any of the excel downloads."
+        },
+        {
+          "name": "Cache not referenced after EDC mapping",
+          "count": 1,
+          "protocols": ["MATCH sub-protocol", "Prot_SAP_ICF_000"],
+          "desc_snippet": "Dataflow before writing export task should reference cache if no changes to the data flow."
+        },
+        {
+          "name": "Date Modified not functional",
+          "count": 1,
+          "protocols": ["A Randomised Trial... Amblyopia in Children"],
+          "desc_snippet": "Date modified on generated CRFs should reflect actual last modified date, but all say 28-12-2024."
+        },
+        {
+          "name": "Edit saves even when Cancel is selected",
+          "count": 1,
+          "protocols": ["HVTN 100_EL"],
+          "desc_snippet": "Edited a CRF and selected Cancel instead of Save, but changes were still saved."
+        }
+      ]
+    }
+  },
+  "age_analysis": {
+    "buckets": {
+      ">50_days": {
+        "count": 15,
+        "issues": [
+          "SoE not accurate",
+          "SoE not pulling through",
+          "SoE not pulling through (Pneumococcal)",
+          "Protocol upload stalled (Phase 2 ACLF)",
+          "Two CRFs generated for same procedure"
+        ]
+      },
+      "40-50_days": {
+        "count": 6,
+        "issues": [
+          "Protocol upload fail (MATCH)",
+          "Editing Visit name cleared the SoE",
+          "SoE Visit names incorrect",
+          "Procedures allocated incorrectly",
+          "Clinical labs allocated incorrectly"
+        ]
+      },
+      "30-40_days": {
+        "count": 6,
+        "issues": [
+          "LLM not accurate on standard terminology",
+          "CRFs in random order (HVTN)",
+          "Range of checks generated",
+          "Some edit checks reference only one field",
+          "Conditional rules do not match schedule of forms"
+        ]
+      },
+      "14-30_days": {
+        "count": 9,
+        "issues": [
+          "Added procedure not pulling into CRF table",
+          "Form content not generating until refresh",
+          "Form content not completely editable",
+          "Schedule of forms not generating",
+          "CRFs not pulling through from edited SoE"
+        ]
+      },
+      "<14_days": {
+        "count": 9,
+        "issues": [
+          "Exceptionally long run time to generate form content",
+          "Protocol upload failed (Pneumococcal)",
+          "Leova logo missing on excel output",
+          "Column header numbers not sequential",
+          "Manual form classified as log form"
+        ]
+      }
+    },
+    "oldest_open": [
+      {
+        "name": "SoE not accurate",
+        "days": 80,
+        "status": "Working on it",
+        "tester": "Annie Joubert",
+        "journey": "Protocol Journey"
+      },
+      {
+        "name": "SoE not pulling through",
+        "days": 80,
+        "status": "Retest unsuccessful",
+        "tester": "Erica Lazarus",
+        "journey": "Protocol Journey"
+      },
+      {
+        "name": "SoE not pulling through (Pneumococcal)",
+        "days": 80,
+        "status": "Stuck",
+        "tester": "Erica Lazarus",
+        "journey": "Protocol Journey"
+      },
+      {
+        "name": "Protocol upload stalled (Phase 2 ACLF)",
+        "days": 80,
+        "status": "Stuck",
+        "tester": "Erica Lazarus",
+        "journey": "Protocol Journey"
+      },
+      {
+        "name": "Two CRFs generated for same procedure",
+        "days": 80,
+        "status": "Addressed (Ready for Re-Test)",
+        "tester": "Erica Lazarus",
+        "journey": "CRF Journey"
+      }
+    ]
+  },
+  "new_since_last_digest": {
+    "cutoff_date": "2026-02-19",
+    "count": 4,
+    "issues": [
+      {
+        "name": "Column header numbers not sequential",
+        "journey": "Protocol Journey",
+        "tester": "Annie Joubert",
+        "date": "2026-02-20",
+        "status": "Working on it",
+        "protocols": "RESOVIR"
+      },
+      {
+        "name": "Manual form classified as log form",
+        "journey": "Form Display Logic",
+        "tester": "Annie Joubert",
+        "date": "2026-02-20",
+        "status": "Pending Prioritisation",
+        "protocols": "RESOVIR"
+      },
+      {
+        "name": "Cache not referenced after EDC mapping",
+        "journey": "Export",
+        "tester": "Shirley Collie",
+        "date": "2026-02-24",
+        "status": "Working on it",
+        "protocols": "Prot_SAP_ICF_000, MATCH sub-protocol"
+      },
+      {
+        "name": "Manual form populated with gibberish",
+        "journey": "CRF Journey",
+        "tester": "Annie Joubert",
+        "date": "2026-02-20",
+        "status": "Pending Prioritisation",
+        "protocols": "RESOVIR"
+      }
+    ]
+  },
+  "testers": ["Annie Joubert", "Erica Lazarus", "Shirley Collie"],
+  "protocols_tested": [
+    "A Randomised Trial... Amblyopia in Children",
+    "Albendazole Tablets",
+    "BRILLIANT-001",
+    "DREAMM",
+    "EVOS",
+    "Efficacy and safety of Astragalus",
+    "HVTN 100",
+    "HVTN 100_EL",
+    "MATCH sub-protocol",
+    "Phase 2 ACLF",
+    "Pneumococcal Phase 2",
+    "Prot_SAP_ICF_000",
+    "RESOVIR",
+    "TB Substudy",
+    "acamprosate"
+  ],
+  "date_range": {
+    "earliest": "2025-11-25",
+    "latest": "2026-02-24"
+  },
+  "previous_week": {
+    "week_id": "2026-W08",
+    "total": 44,
+    "parent_brs": 16
+  },
+  "wow_delta": {
+    "total_change": 1,
+    "parent_brs_change": 2
+  }
+}

@@ -1,0 +1,534 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Leova Alpha Testing Digest</title>
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --bg: #ffffff;
+    --bg-muted: #f5f5f5;
+    --text: #1a1a1a;
+    --text-secondary: #666666;
+    --text-muted: #999999;
+    --blue: #2a2aff;
+    --blue-light: rgba(42,42,255,0.06);
+    --divider: #e8e8e8;
+    --green: #10b981;
+    --green-bg: #ecfdf5;
+    --orange: #f59e0b;
+    --orange-bg: #fffbeb;
+    --red: #ef4444;
+    --red-bg: #fef2f2;
+    --sky: #3b82f6;
+    --sky-bg: #eff6ff;
+    --purple: #8b5cf6;
+    --purple-bg: #f5f3ff;
+  }
+
+  body {
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    line-height: 1.55;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+
+  /* ---- Nav bar ---- */
+  .nav {
+    position: sticky; top: 0; z-index: 100; background: rgba(255,255,255,0.92);
+    backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px);
+    border-bottom: 1px solid var(--divider);
+    padding: 16px 40px; display: flex; align-items: center; justify-content: space-between;
+  }
+  .nav-brand { font-size: 18px; font-weight: 800; letter-spacing: -0.5px; }
+  .nav-brand span { color: var(--blue); }
+  .nav-meta { font-size: 13px; color: var(--text-secondary); letter-spacing: 0.3px; }
+  .nav-week {
+    font-size: 12px; font-weight: 700; letter-spacing: 1.5px; text-transform: uppercase;
+    background: var(--blue); color: #fff; padding: 6px 16px; display: inline-block;
+  }
+
+  /* ---- Layout ---- */
+  .container { max-width: 1200px; margin: 0 auto; padding: 0 40px; }
+  @media (max-width: 600px) { .container { padding: 0 20px; } .nav { padding: 14px 20px; } }
+
+  /* ---- Section pattern ---- */
+  .section { padding: 60px 0; border-bottom: 1px solid var(--divider); }
+  .section:last-of-type { border-bottom: none; }
+  .section-label {
+    display: inline-flex; align-items: center; gap: 8px;
+    font-size: 11px; font-weight: 700; letter-spacing: 2px; text-transform: uppercase;
+    color: var(--text-muted); margin-bottom: 32px;
+  }
+  .section-label .num {
+    font-size: 11px; font-weight: 700; letter-spacing: 1px; color: #fff;
+    background: var(--blue); padding: 3px 8px; margin-right: 4px;
+  }
+
+  /* ---- Hero ---- */
+  .hero { padding: 80px 0 60px; border-bottom: 1px solid var(--divider); }
+  .hero h1 {
+    font-size: clamp(36px, 5vw, 56px); font-weight: 800; letter-spacing: -1.5px;
+    line-height: 1.08; margin-bottom: 20px; max-width: 700px;
+  }
+  .hero-sub { font-size: 16px; color: var(--text-secondary); line-height: 1.6; max-width: 520px; }
+  .hero-sub strong { color: var(--text); font-weight: 600; }
+
+  /* ---- KPI grid ---- */
+  .kpi-grid {
+    display: grid; grid-template-columns: repeat(4, 1fr); gap: 0;
+    border: 1px solid var(--divider);
+  }
+  .kpi {
+    padding: 32px 28px; border-right: 1px solid var(--divider);
+    position: relative;
+  }
+  .kpi:last-child { border-right: none; }
+  .kpi-value { font-size: 42px; font-weight: 800; letter-spacing: -1.5px; line-height: 1; }
+  .kpi-label {
+    font-size: 11px; font-weight: 700; letter-spacing: 1.8px; text-transform: uppercase;
+    color: var(--text-muted); margin-top: 10px;
+  }
+  .kpi-sub { font-size: 13px; color: var(--text-secondary); margin-top: 6px; }
+  .kpi-value.v-green { color: var(--green); }
+  .kpi-value.v-red { color: var(--red); }
+  .kpi-value.v-orange { color: var(--orange); }
+  .kpi-value.v-blue { color: var(--blue); }
+  .delta-up::before { content: "\2191 "; font-size: 28px; }
+  .delta-down::before { content: "\2193 "; font-size: 28px; }
+  @media (max-width: 700px) { .kpi-grid { grid-template-columns: 1fr 1fr; } .kpi:nth-child(2) { border-right: none; } .kpi:nth-child(1), .kpi:nth-child(2) { border-bottom: 1px solid var(--divider); } }
+
+  /* ---- Two-col ---- */
+  .two-col { display: grid; grid-template-columns: 1fr 1fr; gap: 60px; }
+  @media (max-width: 700px) { .two-col { grid-template-columns: 1fr; gap: 40px; } }
+  .col-title {
+    font-size: 11px; font-weight: 700; letter-spacing: 1.8px; text-transform: uppercase;
+    color: var(--text-muted); margin-bottom: 20px; padding-bottom: 12px; border-bottom: 1px solid var(--divider);
+  }
+
+  /* ---- Bar chart ---- */
+  .bar-chart { display: flex; flex-direction: column; gap: 12px; }
+  .bar-row { display: flex; align-items: center; gap: 12px; }
+  .bar-label {
+    flex: 0 0 150px; font-size: 14px; font-weight: 500; color: var(--text);
+    white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
+  }
+  .bar-label .dot {
+    display: inline-block; width: 8px; height: 8px; border-radius: 50%;
+    margin-right: 8px; vertical-align: middle;
+  }
+  .bar-track { flex: 1; height: 6px; background: var(--bg-muted); border-radius: 3px; overflow: hidden; }
+  .bar-fill { height: 100%; border-radius: 3px; transition: width 0.8s cubic-bezier(0.22, 1, 0.36, 1); }
+  .bar-count { flex: 0 0 30px; font-size: 14px; font-weight: 700; text-align: right; }
+  @media (max-width: 500px) { .bar-label { flex: 0 0 110px; font-size: 13px; } }
+
+  /* ---- Status badges ---- */
+  .badge {
+    display: inline-block; font-size: 11px; font-weight: 600; padding: 3px 10px;
+    border-radius: 3px; white-space: nowrap; letter-spacing: 0.2px;
+  }
+  .badge-done { background: var(--green-bg); color: #065f46; }
+  .badge-addressed { background: var(--sky-bg); color: #1e40af; }
+  .badge-working { background: var(--orange-bg); color: #92400e; }
+  .badge-stuck { background: var(--red-bg); color: #991b1b; }
+  .badge-pending { background: var(--purple-bg); color: #5b21b6; }
+  .badge-retest { background: #fef2f2; color: #991b1b; }
+
+  /* ---- Theme accordion ---- */
+  .theme-list { }
+  .theme-item { border-bottom: 1px solid var(--divider); }
+  .theme-item:first-child { border-top: 1px solid var(--divider); }
+  .theme-header {
+    display: flex; align-items: center; gap: 14px; padding: 20px 0;
+    cursor: pointer; transition: opacity 0.15s;
+  }
+  .theme-header:hover { opacity: 0.7; }
+  .theme-num {
+    font-size: 12px; font-weight: 600; color: var(--text-muted); letter-spacing: 0.5px;
+    flex: 0 0 40px;
+  }
+  .theme-name { font-size: 18px; font-weight: 600; flex: 1; letter-spacing: -0.2px; }
+  .theme-dots { display: flex; gap: 5px; align-items: center; flex-shrink: 0; }
+  .theme-dots .dot { display: inline-block; width: 8px; height: 8px; border-radius: 50%; }
+  .theme-count {
+    font-size: 28px; font-weight: 800; letter-spacing: -1px; color: var(--text-muted);
+    flex: 0 0 50px; text-align: right;
+  }
+  .theme-chevron {
+    flex: 0 0 24px; text-align: center; font-size: 18px; color: var(--text-muted);
+    transition: transform 0.3s cubic-bezier(0.22, 1, 0.36, 1);
+  }
+  .theme-item.open .theme-chevron { transform: rotate(45deg); }
+  .theme-body {
+    max-height: 0; overflow: hidden;
+    transition: max-height 0.4s cubic-bezier(0.22, 1, 0.36, 1), padding 0.3s ease;
+    padding: 0 0 0 54px;
+  }
+  .theme-item.open .theme-body { max-height: 2000px; padding: 0 0 28px 54px; }
+  .issue-row { padding: 14px 0; border-bottom: 1px solid var(--bg-muted); }
+  .issue-row:last-child { border-bottom: none; }
+  .issue-name { font-size: 15px; font-weight: 500; margin-bottom: 4px; }
+  .issue-protocols { font-size: 13px; color: var(--text-muted); }
+  .issue-desc { font-size: 13px; color: var(--text-secondary); margin-top: 6px; line-height: 1.5; }
+  .theme-status-summary { display: flex; gap: 8px; flex-wrap: wrap; margin-top: 16px; padding-top: 14px; border-top: 1px solid var(--bg-muted); }
+
+  /* ---- Age analysis ---- */
+  .age-row { display: flex; align-items: center; gap: 14px; padding: 10px 0; }
+  .age-label { flex: 0 0 60px; font-size: 14px; font-weight: 600; letter-spacing: -0.2px; }
+  .age-bar-track { flex: 1; height: 8px; background: var(--bg-muted); border-radius: 4px; overflow: hidden; }
+  .age-bar-fill {
+    height: 100%; border-radius: 4px;
+    transition: width 0.8s cubic-bezier(0.22, 1, 0.36, 1);
+  }
+  .age-count { flex: 0 0 30px; font-size: 14px; font-weight: 700; text-align: right; }
+
+  /* ---- Table ---- */
+  .data-table { width: 100%; border-collapse: collapse; margin-top: 24px; }
+  .data-table th {
+    text-align: left; font-size: 11px; font-weight: 700; text-transform: uppercase;
+    letter-spacing: 1.5px; color: var(--text-muted); padding: 10px 14px;
+    border-bottom: 2px solid var(--text);
+  }
+  .data-table td {
+    padding: 14px; font-size: 14px; border-bottom: 1px solid var(--divider);
+    vertical-align: middle;
+  }
+  .data-table tr:hover td { background: var(--bg-muted); }
+  .days-cell { font-weight: 800; font-size: 15px; letter-spacing: -0.5px; }
+  .days-critical { color: var(--red); }
+  .days-warning { color: var(--orange); }
+
+  /* ---- New issues ---- */
+  .new-issue {
+    display: flex; align-items: flex-start; gap: 20px; padding: 20px 0;
+    border-bottom: 1px solid var(--divider);
+  }
+  .new-issue:last-child { border-bottom: none; }
+  .new-issue-date {
+    flex-shrink: 0; font-size: 12px; font-weight: 700; letter-spacing: 1px;
+    color: var(--blue); background: var(--blue-light);
+    padding: 4px 10px; min-width: 60px; text-align: center;
+  }
+  .new-issue-name { font-size: 16px; font-weight: 500; letter-spacing: -0.2px; }
+  .new-issue-meta { font-size: 13px; color: var(--text-secondary); margin-top: 4px; display: flex; align-items: center; gap: 8px; flex-wrap: wrap; }
+
+  /* ---- Protocol grid ---- */
+  .protocol-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); gap: 0; border-top: 1px solid var(--divider); border-left: 1px solid var(--divider); }
+  .protocol-cell {
+    padding: 14px 16px; font-size: 13px; font-weight: 500; color: var(--text-secondary);
+    border-bottom: 1px solid var(--divider); border-right: 1px solid var(--divider);
+    transition: all 0.15s;
+  }
+  .protocol-cell:hover { background: var(--bg-muted); color: var(--text); }
+
+  /* ---- Footer ---- */
+  .footer-block {
+    background: var(--blue); color: #fff; padding: 60px 40px;
+    margin-top: 0;
+  }
+  .footer-inner { max-width: 1200px; margin: 0 auto; display: flex; justify-content: space-between; align-items: flex-end; flex-wrap: wrap; gap: 20px; }
+  .footer-title { font-size: clamp(24px, 3vw, 36px); font-weight: 700; letter-spacing: -0.5px; line-height: 1.2; }
+  .footer-meta { font-size: 13px; opacity: 0.7; text-align: right; }
+
+  /* ---- Loading ---- */
+  .loading { text-align: center; padding: 120px 20px; color: var(--text-secondary); }
+  .loading-spinner {
+    display: inline-block; width: 24px; height: 24px;
+    border: 2px solid var(--divider); border-top-color: var(--blue);
+    border-radius: 50%; animation: spin 0.7s linear infinite;
+  }
+  @keyframes spin { to { transform: rotate(360deg); } }
+</style>
+</head>
+<body>
+
+<div id="app">
+  <div class="loading">
+    <div class="loading-spinner"></div>
+    <p style="margin-top:16px; font-size:14px;">Loading digest&hellip;</p>
+  </div>
+</div>
+
+<script>
+const STATUS_CONFIG = {
+  'Done (REQ APPROVED)':           { color: '#10b981', bg: '#ecfdf5', fg: '#065f46', cls: 'done', label: 'Done' },
+  'Addressed (Ready for Re-Test)': { color: '#3b82f6', bg: '#eff6ff', fg: '#1e40af', cls: 'addressed', label: 'Ready for Retest' },
+  'Working on it':                 { color: '#f59e0b', bg: '#fffbeb', fg: '#92400e', cls: 'working', label: 'Working on it' },
+  'Stuck':                         { color: '#ef4444', bg: '#fef2f2', fg: '#991b1b', cls: 'stuck', label: 'Stuck' },
+  'Pending Prioritisation':        { color: '#8b5cf6', bg: '#f5f3ff', fg: '#5b21b6', cls: 'pending', label: 'Pending' },
+  'Retest unsuccessful':           { color: '#dc2626', bg: '#fef2f2', fg: '#991b1b', cls: 'retest', label: 'Retest Failed' },
+};
+
+const JOURNEY_COLORS = {
+  'Protocol Journey': '#2a2aff',
+  'CRF Journey': '#10b981',
+  'Form Display Logic': '#f59e0b',
+  'Edit Checks': '#ef4444',
+  'Export': '#3b82f6',
+  'General Requirements': '#999',
+};
+
+const AGE_COLORS = {
+  '<14_days':  '#10b981',
+  '14-30_days': '#3b82f6',
+  '30-40_days': '#f59e0b',
+  '40-50_days': '#f97316',
+  '>50_days':  '#ef4444',
+};
+const AGE_LABELS = { '<14_days': '< 14d', '14-30_days': '14-30d', '30-40_days': '30-40d', '40-50_days': '40-50d', '>50_days': '> 50d' };
+
+function badge(status) {
+  const c = STATUS_CONFIG[status] || { cls: 'unknown', label: status };
+  return `<span class="badge badge-${c.cls}">${c.label}</span>`;
+}
+
+function dots(statuses) {
+  return Object.entries(statuses).map(([s, n]) => {
+    const c = STATUS_CONFIG[s] || { color: '#ccc' };
+    return `<span class="dot" style="background:${c.color}" title="${s}: ${n}"></span>`;
+  }).join('');
+}
+
+function fmtDate(d) {
+  return new Date(d + 'T00:00:00').toLocaleDateString('en-GB', { day: 'numeric', month: 'long', year: 'numeric' });
+}
+
+function fmtDay(d) {
+  const dt = new Date(d + 'T00:00:00');
+  return dt.toLocaleDateString('en-GB', { weekday: 'long', day: 'numeric', month: 'long', year: 'numeric' });
+}
+
+function render(data) {
+  const app = document.getElementById('app');
+  const o = data.counts.total_open, r = data.counts.resolved, t = data.counts.total_all;
+  const wow = data.wow_delta.total_change, nc = data.new_since_last_digest.count;
+  const maxS = Math.max(...Object.values(data.counts.by_status));
+  const maxJ = Math.max(...Object.values(data.counts.by_journey));
+  const themes = Object.entries(data.themes).sort((a, b) => b[1].count - a[1].count);
+  const ageBuckets = ['<14_days', '14-30_days', '30-40_days', '40-50_days', '>50_days'];
+  const maxA = Math.max(...ageBuckets.map(k => data.age_analysis.buckets[k]?.count || 0));
+
+  app.innerHTML = `
+    <!-- Nav -->
+    <nav class="nav">
+      <div class="nav-brand"><span>leova</span> digest</div>
+      <div class="nav-meta">${fmtDay(data.generated)}</div>
+      <div class="nav-week">${data.week_id}</div>
+    </nav>
+
+    <!-- Hero -->
+    <div class="container">
+      <div class="hero">
+        <h1>Alpha Testing Synthesis</h1>
+        <p class="hero-sub">
+          <strong>${o} open issues</strong> across ${data.counts.parent_brs_open} business requirements,
+          tested by ${data.testers.join(', ')} across
+          <strong>${data.protocols_tested.length} protocols</strong>.
+        </p>
+      </div>
+    </div>
+
+    <!-- [01] Key Metrics -->
+    <div class="container">
+      <div class="section" style="padding-top:48px">
+        <div class="section-label"><span class="num">01</span> Key Metrics</div>
+        <div class="kpi-grid">
+          <div class="kpi">
+            <div class="kpi-value v-blue">${o}</div>
+            <div class="kpi-label">Open</div>
+            <div class="kpi-sub">${data.counts.parent_brs_open} requirements affected</div>
+          </div>
+          <div class="kpi">
+            <div class="kpi-value v-green">${r}</div>
+            <div class="kpi-label">Resolved</div>
+            <div class="kpi-sub">of ${t} total logged</div>
+          </div>
+          <div class="kpi">
+            <div class="kpi-value ${wow > 0 ? 'v-red delta-up' : wow < 0 ? 'v-green delta-down' : ''}">${wow > 0 ? '+' : ''}${wow}</div>
+            <div class="kpi-label">Week / Week</div>
+            <div class="kpi-sub">vs ${data.previous_week.week_id} (${data.previous_week.total})</div>
+          </div>
+          <div class="kpi">
+            <div class="kpi-value v-orange">${nc}</div>
+            <div class="kpi-label">New This Week</div>
+            <div class="kpi-sub">since ${fmtDate(data.new_since_last_digest.cutoff_date)}</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- [02] Distribution -->
+    <div class="container">
+      <div class="section">
+        <div class="section-label"><span class="num">02</span> Distribution</div>
+        <div class="two-col">
+          <div>
+            <div class="col-title">By Status</div>
+            <div class="bar-chart">
+              ${Object.entries(data.counts.by_status).sort((a,b) => b[1]-a[1]).map(([s, n]) => {
+                const c = STATUS_CONFIG[s] || { color: '#ccc', label: s };
+                return `<div class="bar-row">
+                  <div class="bar-label"><span class="dot" style="background:${c.color}"></span>${c.label}</div>
+                  <div class="bar-track"><div class="bar-fill" style="width:${(n/maxS)*100}%;background:${c.color}"></div></div>
+                  <div class="bar-count">${n}</div>
+                </div>`;
+              }).join('')}
+            </div>
+          </div>
+          <div>
+            <div class="col-title">By Journey</div>
+            <div class="bar-chart">
+              ${Object.entries(data.counts.by_journey).sort((a,b) => b[1]-a[1]).map(([j, n]) => {
+                const color = JOURNEY_COLORS[j] || '#999';
+                return `<div class="bar-row">
+                  <div class="bar-label"><span class="dot" style="background:${color}"></span>${j}</div>
+                  <div class="bar-track"><div class="bar-fill" style="width:${(n/maxJ)*100}%;background:${color}"></div></div>
+                  <div class="bar-count">${n}</div>
+                </div>`;
+              }).join('')}
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- [03] Themes -->
+    <div class="container">
+      <div class="section">
+        <div class="section-label"><span class="num">03</span> Issue Themes</div>
+        <div class="theme-list">
+          ${themes.map(([name, th], i) => `
+            <div class="theme-item${i === 0 ? ' open' : ''}" onclick="toggleTheme(this)">
+              <div class="theme-header">
+                <span class="theme-num">[${String(i+1).padStart(2,'0')}]</span>
+                <span class="theme-name">${name}</span>
+                <span class="theme-dots">${dots(th.statuses)}</span>
+                <span class="theme-count">${th.count}</span>
+                <span class="theme-chevron">+</span>
+              </div>
+              <div class="theme-body">
+                ${th.issue_groups.map(issue => `
+                  <div class="issue-row">
+                    <div class="issue-name">${issue.name}</div>
+                    ${issue.protocols.length ? `<div class="issue-protocols">${issue.protocols.join(' / ')}</div>` : ''}
+                    ${issue.desc_snippet ? `<div class="issue-desc">${issue.desc_snippet}</div>` : ''}
+                  </div>
+                `).join('')}
+                <div class="theme-status-summary">
+                  ${Object.entries(th.statuses).map(([s, n]) =>
+                    `${badge(s)} <span style="font-size:13px;color:var(--text-muted);margin-right:4px">${n}</span>`
+                  ).join('')}
+                </div>
+              </div>
+            </div>
+          `).join('')}
+        </div>
+      </div>
+    </div>
+
+    <!-- [04] Age Analysis -->
+    <div class="container">
+      <div class="section">
+        <div class="section-label"><span class="num">04</span> Issue Age</div>
+        <div class="two-col">
+          <div>
+            <div class="col-title">Age Distribution</div>
+            ${ageBuckets.map(k => {
+              const b = data.age_analysis.buckets[k];
+              if (!b) return '';
+              return `<div class="age-row">
+                <div class="age-label">${AGE_LABELS[k]}</div>
+                <div class="age-bar-track"><div class="age-bar-fill" style="width:${(b.count/maxA)*100}%;background:${AGE_COLORS[k]}"></div></div>
+                <div class="age-count">${b.count}</div>
+              </div>`;
+            }).join('')}
+          </div>
+          <div>
+            <div class="col-title">Oldest Open</div>
+            ${data.age_analysis.oldest_open.slice(0, 5).map(issue => `
+              <div style="display:flex;align-items:center;gap:14px;padding:10px 0;border-bottom:1px solid var(--divider)">
+                <span class="days-cell ${issue.days > 60 ? 'days-critical' : 'days-warning'}" style="flex:0 0 50px;text-align:right">${issue.days}d</span>
+                <div style="flex:1">
+                  <div style="font-size:14px;font-weight:500">${issue.name}</div>
+                  <div style="font-size:12px;color:var(--text-muted)">${issue.tester} &middot; ${issue.journey}</div>
+                </div>
+                ${badge(issue.status)}
+              </div>
+            `).join('')}
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- [05] New This Week -->
+    <div class="container">
+      <div class="section">
+        <div class="section-label"><span class="num">05</span> New Since Last Digest</div>
+        ${data.new_since_last_digest.issues.map(issue => `
+          <div class="new-issue">
+            <div class="new-issue-date">${issue.date.slice(5)}</div>
+            <div style="flex:1">
+              <div class="new-issue-name">${issue.name}</div>
+              <div class="new-issue-meta">
+                ${badge(issue.status)}
+                <span>${issue.journey}</span>
+                <span style="color:var(--text-muted)">${issue.tester}</span>
+                ${issue.protocols ? `<span style="color:var(--text-muted)">${issue.protocols}</span>` : ''}
+              </div>
+            </div>
+          </div>
+        `).join('')}
+      </div>
+    </div>
+
+    <!-- [06] Protocols -->
+    <div class="container">
+      <div class="section" style="border-bottom:none">
+        <div class="section-label"><span class="num">06</span> Protocols Tested</div>
+        <div class="protocol-grid">
+          ${data.protocols_tested.map(p => `<div class="protocol-cell">${p}</div>`).join('')}
+        </div>
+      </div>
+    </div>
+
+    <!-- Footer -->
+    <div class="footer-block">
+      <div class="footer-inner">
+        <div class="footer-title">Leova Alpha Testing<br>Digest</div>
+        <div class="footer-meta">
+          ${data.week_id} &middot; ${fmtDate(data.generated)}<br>
+          ${data.protocols_tested.length} protocols &middot; ${t} issues tracked<br>
+          Built by Robert Kieser & Claude
+        </div>
+      </div>
+    </div>
+  `;
+}
+
+function toggleTheme(el) {
+  el.classList.toggle('open');
+}
+
+async function init() {
+  try {
+    const r = await fetch('data/digest.json');
+    if (!r.ok) throw new Error('HTTP ' + r.status);
+    render(await r.json());
+  } catch (e) {
+    document.getElementById('app').innerHTML = `
+      <div class="loading">
+        <p style="color:var(--red);font-weight:600">Failed to load digest data</p>
+        <p style="margin-top:8px;font-size:13px;color:var(--text-secondary)">${e.message}</p>
+        <p style="margin-top:12px;font-size:13px;color:var(--text-muted)">Ensure <code>data/digest.json</code> exists alongside this file.</p>
+      </div>`;
+  }
+}
+
+init();
+</script>
+</body>
+</html>
